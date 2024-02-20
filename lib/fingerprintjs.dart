@@ -2,6 +2,8 @@
 library fingerprintjs;
 
 import 'dart:async';
+import 'dart:html' as html;
+import 'dart:ui_web' as ui;
 
 import 'package:js/js.dart';
 
@@ -30,11 +32,14 @@ class Fingerprint {
   /// all the components extracted from the browser
   static Future<List<FingerprintComponent>> get({Options? options}) {
     final completer = Completer<List<FingerprintComponent>>();
-    Timer(Duration(milliseconds: 500), () {
-      _Fingerprint.get(options, allowInterop((components) {
-        completer.complete(components.cast<FingerprintComponent>());
-      }));
-    });
+    // Timer(Duration(milliseconds: 500), () {
+    //   _Fingerprint.get(options, allowInterop((components) {
+    //     completer.complete(components.cast<FingerprintComponent>());
+    //   }));
+    // });
+    _Fingerprint.get(options, allowInterop((components) {
+      completer.complete(components.cast<FingerprintComponent>());
+    }));
     return completer.future;
   }
 
@@ -45,8 +50,26 @@ class Fingerprint {
 
   /// Create a fingerprint hash from the properties extracted
   static Future<String> getHash() async {
+    await _loadFingerprint2Js();
     var components = await Fingerprint.get();
     var values = components.map((component) => component.value);
     return Fingerprint.x64hash128(values.join(''), 31);
+  }
+
+  static Future<void> _loadFingerprint2Js() async {
+    final List<Future<void>> loading = <Future<void>>[];
+
+    // ignore: undefined_prefixed_name
+    final jsUrl = ui.assetManager.getAssetUrl(
+      'packages/fingerprintjs/assets/js/fingerprint2.min.js',
+    );
+    final html.ScriptElement script = html.ScriptElement()
+      ..async = true
+    // ..defer = true
+      ..src = jsUrl;
+    loading.add(script.onLoad.first);
+    html.querySelector('head')!.children.add(script);
+
+    await Future.wait(loading);
   }
 }
