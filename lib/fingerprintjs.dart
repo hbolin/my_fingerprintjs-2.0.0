@@ -28,6 +28,8 @@ class FingerprintComponent {
 
 /// A wrapper for the fingerprintjs library
 class Fingerprint {
+  static const _fingerprint2_id = "id_my_fingerprint2";
+
   /// Returns an array of `FingerprintComponent` which contains
   /// all the components extracted from the browser
   static Future<List<FingerprintComponent>> get({Options? options}) {
@@ -57,6 +59,9 @@ class Fingerprint {
   }
 
   static Future<void> _loadFingerprint2Js() async {
+    if (html.querySelector("#$_fingerprint2_id") != null) {
+      return;
+    }
     final List<Future<void>> loading = <Future<void>>[];
 
     // ignore: undefined_prefixed_name
@@ -64,6 +69,7 @@ class Fingerprint {
       'packages/fingerprintjs/assets/js/fingerprint2.min.js',
     );
     final html.ScriptElement script = html.ScriptElement()
+      ..id = _fingerprint2_id
       ..async = true
     // ..defer = true
       ..src = jsUrl;
