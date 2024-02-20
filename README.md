@@ -6,10 +6,13 @@
 
 [![pub package](https://img.shields.io/pub/v/fingerprintjs.svg)](https://pub.dartlang.org/packages/fingerprintjs)
 
-Add script in index.html before importing main.dart.js:
-```html
-<script src="//cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
-```
+[//]: # (Add script in index.html before importing main.dart.js:)
+
+[//]: # (```html)
+
+[//]: # (<script src="//cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>)
+
+[//]: # (```)
 
 
 ## Usage
