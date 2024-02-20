@@ -2,14 +2,14 @@
 
 1.参考fluttertoast源码，把js文件变成使用时在进行导入。
 
-#### 发布2.0.0
+#### 发布2.0.1
 
 ```yaml
 dependencies:
   fingerprintjs:
     git:
       url: "https://github.com/hbolin/my_fingerprintjs-2.0.0"
-      ref: "2.0.0"
+      ref: "2.0.1"
 ```
 
 #### 使用方式
